@@ -2,7 +2,6 @@ import turtle as tl
 import time
 import random
 
-print("TEST COMMIT, KAS FUNKAB?")
 delaySeconds = 0.1 #time.sleep() funktsiooni muutuja
 
 #mänguaken

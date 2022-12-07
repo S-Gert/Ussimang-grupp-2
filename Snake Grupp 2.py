@@ -95,27 +95,46 @@ snake_body = [psegment] #ilma placeholderita läheb esimene saba osa pea peale m
 while True:
     wn.update()
     move()
-    
-    #toidu söömine
-    if head.distance(food) < pixel:
+    def move_food():
         x = random.randrange(-280, 280, pixel)
         y = random.randrange(-280, 280, pixel)
         food.goto(x, y)
-        
-        #takistab toidu tekkimisel ussi keha sisse
-        for segment in snake_body:
-            if segment.distance(food) < pixel:
-                x = random.randrange(-280, 280, pixel)
-                y = random.randrange(-280, 280, pixel)
-                food.goto(x, y)
-        
-        #toidu söömisel keha segmendi lisamine
+
+    def uus_segment():
         new_segment = tl.Turtle()
         new_segment.shape("square")
         new_segment.color("#C0C0C0")
         new_segment.penup()
         snake_body.append(new_segment)
+    
+    def wall(snake_body):
+        head.direction = "stop"
+        time.sleep(0.5)
+        head.goto(0, 0)
+        for segment in snake_body:
+            segment.goto(3000, 3000) #keha osade objekte otseselt eemaldada ei oska, seega saadan kuskile pärapõrgusse
+        snake_body = [psegment]
+
+    # def body_colision(snake_body):
+    #     head.direction = "stop"
+    #     time.sleep(0.5)
+    #     head.goto(0, 0)
+    #     for segment in snake_body:
+    #         segment.goto(3000, 3000)
+    #     snake_body = [psegment] 
+
+    #toidu söömine
+    if head.distance(food) < pixel:
+        move_food()
         
+        #takistab toidu tekkimisel ussi keha sisse
+        for segment in snake_body:
+            if segment.distance(food) < pixel:
+                move_food()
+        
+        uus_segment()
+        #toidu söömisel keha segmendi lisamine
+
         #add score
         score = score + 1
         if score  > high_score:
@@ -131,13 +150,8 @@ while True:
         
     #mänguäärte kokkupõrked
     if head.xcor() < -280 or head.xcor() > 280 or head.ycor() < -280 or head.ycor() > 280:
-        head.direction = "stop"
-        time.sleep(0.5)
-        head.goto(0, 0)
-        for segment in snake_body:
-            segment.goto(3000, 3000) #keha osade objekte otseselt eemaldada ei oska, seega saadan kuskile pärapõrgusse
-        snake_body = [psegment]
-        
+        wall(snake_body)
+
         #clear score
         score = 0
                 
@@ -151,12 +165,14 @@ while True:
     #ussi pea ja keha kokkupõrkamine
     for segment in snake_body:
         if segment.distance(head) < pixel:
+            #body_colision(snake_body)
             head.direction = "stop"
             time.sleep(0.5)
-            head.goto(0,0)
+            head.goto(0, 0)
             for segment in snake_body:
                 segment.goto(3000, 3000)
-            snake_body = [psegment]           
+            snake_body = [psegment] 
+          
             #clear score
             score = 0
                         

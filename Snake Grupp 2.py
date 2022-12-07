@@ -77,9 +77,14 @@ wn.onkeypress(move_down, "s")
 wn.onkeypress(move_left, "a")
 wn.onkeypress(move_right, "d")
 
+#saab liikuda ka nooltega.
+wn.onkeypress(move_up, "Up")
+wn.onkeypress(move_down, "Down")
+wn.onkeypress(move_left, "Left")
+wn.onkeypress(move_right, "Right")
+
 #esimene segment listis
 psegment = tl.Turtle()
-psegment.speed(0)
 psegment.shape("square")
 psegment.color("#FFFFFF")
 psegment.penup()
@@ -106,7 +111,6 @@ while True:
         
         #toidu söömisel keha segmendi lisamine
         new_segment = tl.Turtle()
-        new_segment.speed(0)
         new_segment.shape("square")
         new_segment.color("#C0C0C0")
         new_segment.penup()
